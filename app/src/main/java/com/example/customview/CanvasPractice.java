@@ -2,9 +2,10 @@ package com.example.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -23,6 +24,7 @@ public class CanvasPractice extends View {
     private int mWidth;
     private int mHeight;
     private RectF rect;
+    private LinearGradient linearGradient;
 
     public CanvasPractice(Context context) {
         super(context);
@@ -42,9 +44,12 @@ public class CanvasPractice extends View {
 
     private void init() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(10f);
-        rect = new RectF(0, -400, 400, 0);
+        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        //参数一为渐变起初点坐标x位置，参数二为y轴位置，参数三和四分辨对应渐变终点，最后参数为平铺方式，这里设置为镜像
+        linearGradient = new LinearGradient(0, 100, 100, 0, 0xFF47c1f9, 0xFF8169ff, Shader.TileMode.REPEAT);
+        mPaint.setShader(linearGradient);
+      /*  mPaint.setStrokeWidth(10f);
+        rect = new RectF(0, -400, 400, 0);*/
     }
 
     //确定view的大小
@@ -59,11 +64,10 @@ public class CanvasPractice extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        /*   paint.setColor(Color.RED);
-        canvas.translate(200, 200);
-        canvas.drawCircle(0, 0, 100, paint);
+        canvas.translate(mWidth/2, mHeight/2);
+        canvas.drawCircle(0, 0, mWidth/2, mPaint);
 
-        paint.setColor(Color.BLUE);
+        /*   paint.setColor(Color.BLUE);
         canvas.translate(200,200);
         canvas.drawCircle(0,0,100,paint);
 
@@ -78,14 +82,15 @@ public class CanvasPractice extends View {
             canvas.scale(0.9f, 0.9f);
             canvas.drawRect(rect, mPaint);
         }*/
-        canvas.translate(mWidth / 2, mHeight / 2);  // 移动坐标系到屏幕中心(宽高数据在onSizeChanged中获取)
+    /*    canvas.translate(mWidth / 2, mHeight / 2);  // 移动坐标系到屏幕中心(宽高数据在onSizeChanged中获取)
 
         Path path = new Path();                     // 创建Path
 
         path.lineTo(200, 200);                      // lineTo
         path.lineTo(200,0);
 
-        canvas.drawPath(path, mPaint);              // 绘制Path
+        canvas.drawPath(path, mPaint);              // 绘制Path*/
+
     }
 
     @Override

@@ -22,6 +22,8 @@ public class ThreadActivity extends AppCompatActivity {
         Log.i(TAG, "threadCount: " + threadCount);
         fixedThreadPool = Executors.newFixedThreadPool(threadCount);
         cachedThreadPool = Executors.newCachedThreadPool();
+        RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.ripple_scan);
+        rippleBackground.startRippleAnimation();
     }
 
     public void newFixedThreadPool(View view) {
@@ -66,4 +68,5 @@ public class ThreadActivity extends AppCompatActivity {
             });
         }
     }
+
 }
